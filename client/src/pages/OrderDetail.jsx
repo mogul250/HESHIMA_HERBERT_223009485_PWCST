@@ -31,6 +31,10 @@ export default function OrderDetail() {
   const { id } = useParams();
   const { user } = useAuth();
 
+  const isAdmin = user?.role === 'admin';
+  const isKitchen = user?.role === 'kitchen';
+  const isWaiter = user?.role === 'waiter';
+
   const [order, setOrder] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -285,8 +289,8 @@ export default function OrderDetail() {
                   </div>
 
                   <div className="flex flex-wrap items-center gap-2">
-                    {/* Kitchen Action 1: Start Cooking */}
-                    {order.status === 'pending' && (
+                    {/* Kitchen Action 1: Start Cooking (Kitchen or Admin only) */}
+                    {(isKitchen || isAdmin) && order.status === 'pending' && (
                       <button
                         onClick={() => handleStatusChange('preparing')}
                         disabled={updating}
@@ -297,8 +301,8 @@ export default function OrderDetail() {
                       </button>
                     )}
 
-                    {/* Kitchen Action 2: Mark Ready */}
-                    {order.status === 'preparing' && (
+                    {/* Kitchen Action 2: Mark Ready (Kitchen or Admin only) */}
+                    {(isKitchen || isAdmin) && order.status === 'preparing' && (
                       <button
                         onClick={() => handleStatusChange('ready')}
                         disabled={updating}
@@ -309,8 +313,8 @@ export default function OrderDetail() {
                       </button>
                     )}
 
-                    {/* Waiter Action: Mark Served */}
-                    {order.status === 'ready' && (
+                    {/* Waiter Action: Mark Served (Waiter or Admin only) */}
+                    {(isWaiter || isAdmin) && order.status === 'ready' && (
                       <button
                         onClick={() => handleStatusChange('served')}
                         disabled={updating}

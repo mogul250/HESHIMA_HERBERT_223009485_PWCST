@@ -10,6 +10,7 @@ import AllOrders from './pages/AllOrders.jsx';
 import CreateOrder from './pages/CreateOrder.jsx';
 import OrderDetail from './pages/OrderDetail.jsx';
 import MenuManagement from './pages/MenuManagement.jsx';
+import TableManagement from './pages/TableManagement.jsx';
 import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 function App() {
@@ -85,12 +86,22 @@ function App() {
           }
         />
 
-        {/* Menu Dishes Database & Management */}
+        {/* Menu Management (Admin Only - Waiters and Kitchen cannot set the menu) */}
         <Route
           path="/menu"
           element={
-            <ProtectedRoute allowedRoles={['waiter', 'kitchen', 'admin']}>
+            <ProtectedRoute allowedRoles={['admin']}>
               <MenuManagement />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Dining Tables Layout & Management (Admin Only - Inserts & manages tables) */}
+        <Route
+          path="/tables"
+          element={
+            <ProtectedRoute allowedRoles={['admin']}>
+              <TableManagement />
             </ProtectedRoute>
           }
         />

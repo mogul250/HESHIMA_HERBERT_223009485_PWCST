@@ -64,7 +64,13 @@ export const cancelOrder = (id) =>
 export const getTables = () =>
   api.get('/tables').then((r) => r.data);
 
+export const createTable = (tableData) =>
+  api.post('/tables', tableData).then((r) => r.data);
+
 export const updateTableStatus = (id, status) =>
   api.patch(`/tables/${id}/status`, { status }).then((r) => r.data);
+
+export const deleteTable = (id) =>
+  api.delete(`/tables/${id}`).then((r) => r.data);
 
 export default api;

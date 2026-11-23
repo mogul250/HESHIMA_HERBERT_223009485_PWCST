@@ -8,12 +8,14 @@ import {
   LogOut,
   LogIn,
   BookOpen,
+  Layers,
 } from 'lucide-react';
 
 export default function Navbar() {
   const { user, logout, isAuthenticated } = useAuth();
   const location = useLocation();
 
+  const isAdmin = user?.role === 'admin';
   const isKitchen = user?.role === 'kitchen';
   const isWaiter = user?.role === 'waiter';
 
@@ -44,57 +46,82 @@ export default function Navbar() {
         </Link>
 
         {/* Center Nav Links - STRICT ROLE SEPARATION */}
-        <nav className="hidden md:flex items-center gap-1 bg-gray-900/90 p-1 rounded-2xl border border-gray-800">
-          {/* Waiter Station: only for Waiter or Admin (Kitchen CANNOT make orders) */}
-          {!isKitchen && (
-            <Link
-              to="/waiter"
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${location.pathname === '/waiter'
-                  ? 'bg-brand-500 text-white shadow-sm'
-                  : 'text-gray-400 hover:text-white hover:bg-gray-800'
+        {isAuthenticated && (
+          <nav className="hidden md:flex items-center gap-1 bg-gray-900/90 p-1 rounded-2xl border border-gray-800">
+            {/* Waiter Station: only for Waiter or Admin (Kitchen CANNOT see or access) */}
+            {(isWaiter || isAdmin) && (
+              <Link
+                to="/waiter"
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  location.pathname === '/waiter'
+                    ? 'bg-brand-500 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
                 }`}
+              >
+                <UtensilsCrossed className="w-3.5 h-3.5" />
+                Waiter (Order Taking)
+              </Link>
+            )}
+
+            {/* Kitchen Station: only for Kitchen or Admin (Waiters CANNOT see or access) */}
+            {(isKitchen || isAdmin) && (
+              <Link
+                to="/kitchen"
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  location.pathname === '/kitchen'
+                    ? 'bg-emerald-500 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <ChefHat className="w-3.5 h-3.5" />
+                Kitchen Display
+              </Link>
+            )}
+
+            {/* All Orders Central Hub: visible to all authenticated staff */}
+            <Link
+              to="/orders"
+              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                location.pathname.startsWith('/orders') && location.pathname !== '/orders/new'
+                  ? 'bg-gray-800 text-white shadow-sm'
+                  : 'text-gray-400 hover:text-white hover:bg-gray-800'
+              }`}
             >
-              <UtensilsCrossed className="w-3.5 h-3.5" />
-              Waiter (Order Taking)
+              <ClipboardList className="w-3.5 h-3.5" />
+              All Orders
             </Link>
-          )}
 
-          {/* Kitchen Station: for Kitchen or Admin */}
-          <Link
-            to="/kitchen"
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${location.pathname === '/kitchen'
-                ? 'bg-emerald-500 text-white shadow-sm'
-                : 'text-gray-400 hover:text-white hover:bg-gray-800'
-              }`}
-          >
-            <ChefHat className="w-3.5 h-3.5" />
-            Kitchen Display
-          </Link>
+            {/* Admin Only: Menu Configuration */}
+            {isAdmin && (
+              <Link
+                to="/menu"
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  location.pathname === '/menu'
+                    ? 'bg-purple-600 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <BookOpen className="w-3.5 h-3.5" />
+                Manage Menu
+              </Link>
+            )}
 
-          {/* All Orders Central Hub */}
-          <Link
-            to="/orders"
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${location.pathname.startsWith('/orders') && location.pathname !== '/orders/new'
-                ? 'bg-gray-800 text-white shadow-sm'
-                : 'text-gray-400 hover:text-white hover:bg-gray-800'
-              }`}
-          >
-            <ClipboardList className="w-3.5 h-3.5" />
-            All Orders
-          </Link>
-
-          {/* Menu Catalog & Database Management */}
-          <Link
-            to="/menu"
-            className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${location.pathname === '/menu'
-                ? 'bg-gray-800 text-white shadow-sm'
-                : 'text-gray-400 hover:text-white hover:bg-gray-800'
-              }`}
-          >
-            <BookOpen className="w-3.5 h-3.5" />
-            {user?.role === 'admin' ? 'Manage Menu' : 'Menu Catalog'}
-          </Link>
-        </nav>
+            {/* Admin Only: Table Layout & Insertion */}
+            {isAdmin && (
+              <Link
+                to="/tables"
+                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                  location.pathname === '/tables'
+                    ? 'bg-purple-600 text-white shadow-sm'
+                    : 'text-gray-400 hover:text-white hover:bg-gray-800'
+                }`}
+              >
+                <Layers className="w-3.5 h-3.5" />
+                Dining Tables
+              </Link>
+            )}
+          </nav>
+        )}
 
         {/* User Profile / Auth Actions */}
         <div className="flex items-center gap-3">
