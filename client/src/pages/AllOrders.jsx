@@ -280,15 +280,15 @@ export default function AllOrders() {
                 return (
                   <div
                     key={order._id}
-                    className="card p-5 flex flex-col justify-between hover:border-gray-700 transition-all"
+                    className="card p-4 sm:p-5 flex flex-col justify-between hover:border-gray-700 transition-all shadow-lg"
                   >
                     <div>
                       {/* Header */}
-                      <div className="flex items-start justify-between gap-2 mb-3">
+                      <div className="flex items-start justify-between gap-2 mb-3 pb-3 border-b border-gray-800/80">
                         <div className="flex items-center gap-3">
-                          <div className="w-12 h-12 bg-gray-950 border border-gray-800 text-white rounded-2xl flex flex-col items-center justify-center">
-                            <span className="text-[9px] text-gray-400 leading-none font-bold">TBL</span>
-                            <span className="text-lg font-black leading-tight text-white">
+                          <div className="w-11 h-11 bg-brand-500/10 border border-brand-500/30 text-white rounded-xl flex flex-col items-center justify-center shrink-0">
+                            <span className="text-[8px] text-brand-400 leading-none font-bold">TBL</span>
+                            <span className="text-base font-black leading-tight text-white">
                               #{order.tableNumber}
                             </span>
                           </div>
@@ -296,7 +296,7 @@ export default function AllOrders() {
                             <p className="font-bold text-white text-sm">
                               Table #{order.tableNumber}
                             </p>
-                            <p className="text-[11px] text-gray-400">
+                            <p className="text-[11px] text-gray-400 mt-0.5">
                               By {order.waiterName || 'Staff'} ·{' '}
                               {new Date(order.createdAt).toLocaleTimeString([], {
                                 hour: '2-digit',
@@ -312,16 +312,24 @@ export default function AllOrders() {
                       </div>
 
                       {/* Items List */}
-                      <div className="bg-gray-950/70 border border-gray-800/80 rounded-xl p-3 space-y-1.5 my-3">
+                      <div className="space-y-1.5 mb-3">
                         {order.items.map((item, idx) => (
-                          <div key={idx} className="flex justify-between text-xs text-gray-300">
-                            <span>
-                              <strong className="text-white">{item.quantity}×</strong> {item.name}
+                          <div
+                            key={idx}
+                            className="flex items-center justify-between py-1.5 px-3 rounded-xl bg-gray-950/50 border border-gray-800/60 text-xs text-gray-300"
+                          >
+                            <span className="flex items-center gap-2 min-w-0">
+                              <span className="w-5 h-5 rounded-md bg-gray-800 text-brand-400 font-black text-[11px] flex items-center justify-center shrink-0">
+                                {item.quantity}
+                              </span>
+                              <span className="font-bold text-gray-200 truncate">{item.name}</span>
                               {item.notes && (
-                                <span className="text-amber-400 ml-1">({item.notes})</span>
+                                <span className="text-[10px] text-amber-300 bg-amber-950/50 px-1.5 py-0.2 rounded border border-amber-500/20 shrink-0">
+                                  {item.notes}
+                                </span>
                               )}
                             </span>
-                            <span className="font-semibold text-gray-400">
+                            <span className="font-bold text-gray-300 shrink-0 pl-2">
                               {formatCurrency(item.price * item.quantity)}
                             </span>
                           </div>
@@ -329,16 +337,17 @@ export default function AllOrders() {
                       </div>
 
                       {order.notes && (
-                        <p className="text-xs text-amber-300 bg-amber-950/30 border border-amber-500/20 p-2 rounded-lg mb-3">
-                          📌 {order.notes}
+                        <p className="text-xs text-amber-300 bg-amber-950/30 border border-amber-500/20 px-3 py-2 rounded-xl mb-3 flex items-start gap-1.5">
+                          <span>📌</span>
+                          <span>{order.notes}</span>
                         </p>
                       )}
                     </div>
 
                     {/* Footer with Status Progression Actions */}
-                    <div className="pt-3 border-t border-gray-800">
+                    <div className="pt-3 border-t border-gray-800/80 mt-auto">
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-xs text-gray-400 font-medium">Order Total</span>
+                        <span className="text-xs text-gray-400 font-semibold">Order Total</span>
                         <span className="text-base font-black text-white">
                           {formatCurrency(order.totalAmount)}
                         </span>

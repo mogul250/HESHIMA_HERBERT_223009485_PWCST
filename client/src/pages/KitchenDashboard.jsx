@@ -295,10 +295,12 @@ function KitchenDashboard() {
                   <div className="flex-1 overflow-y-auto space-y-3.5 pr-1">
                     {/* EMPTY COLUMN STATE */}
                     {columnOrders.length === 0 ? (
-                      <div className="h-64 flex flex-col items-center justify-center border-2 border-dashed border-gray-800 rounded-3xl text-gray-600 p-6 text-center">
-                        <ColIcon className="w-10 h-10 mb-2 opacity-30" />
-                        <p className="text-xs font-bold text-gray-500">No orders in this stage</p>
-                        <p className="text-[11px] text-gray-600 mt-1">
+                      <div className="min-h-[220px] flex flex-col items-center justify-center border border-dashed border-gray-800/80 rounded-2xl bg-gray-900/30 text-gray-500 p-6 text-center">
+                        <div className="w-10 h-10 rounded-2xl bg-gray-800/50 flex items-center justify-center mb-2.5 text-gray-500">
+                          <ColIcon className="w-5 h-5" />
+                        </div>
+                        <p className="text-xs font-bold text-gray-400">No orders in this stage</p>
+                        <p className="text-[11px] text-gray-500 mt-0.5">
                           Orders automatically appear and move here
                         </p>
                       </div>
@@ -306,26 +308,26 @@ function KitchenDashboard() {
                       columnOrders.map((order) => (
                         <div
                           key={order._id}
-                          className={`rounded-2xl border p-4.5 transition-all shadow-lg flex flex-col justify-between ${styling.card}`}
+                          className={`rounded-2xl border p-4 sm:p-5 transition-all shadow-lg flex flex-col justify-between ${styling.card}`}
                         >
                           <div>
                             {/* Order Card Head */}
-                            <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-800">
+                            <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-800/80">
                               <div className="flex items-center gap-3">
-                                <div className="w-11 h-11 bg-gray-800 border border-gray-700 rounded-2xl flex flex-col items-center justify-center">
-                                  <span className="text-[9px] text-gray-400 font-bold leading-none">
-                                    TABLE
+                                <div className="w-10 h-10 bg-brand-500/10 border border-brand-500/30 rounded-xl flex flex-col items-center justify-center shrink-0">
+                                  <span className="text-[8px] text-brand-400 font-extrabold uppercase tracking-wider leading-none">
+                                    TBL
                                   </span>
-                                  <span className="text-lg font-black text-white leading-tight">
+                                  <span className="text-base font-black text-white leading-tight">
                                     #{order.tableNumber}
                                   </span>
                                 </div>
                                 <div>
-                                  <h4 className="font-bold text-sm text-white">
+                                  <h4 className="font-extrabold text-sm text-white">
                                     Table #{order.tableNumber}
                                   </h4>
-                                  <p className="text-[11px] text-gray-400">
-                                    Waiter: {order.waiterName || 'Staff'} ·{' '}
+                                  <p className="text-[11px] text-gray-400 mt-0.5">
+                                    {order.waiterName || 'Staff'} ·{' '}
                                     {new Date(order.createdAt).toLocaleTimeString([], {
                                       hour: '2-digit',
                                       minute: '2-digit',
@@ -334,7 +336,7 @@ function KitchenDashboard() {
                                 </div>
                               </div>
                               <div
-                                className={`flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg bg-gray-800/80 border border-gray-700/60 ${getTimeColor(
+                                className={`flex items-center gap-1.5 text-xs font-mono px-2.5 py-1 rounded-lg bg-gray-950/70 border border-gray-800 ${getTimeColor(
                                   order.createdAt,
                                   order.status
                                 )}`}
@@ -345,21 +347,26 @@ function KitchenDashboard() {
                             </div>
 
                             {/* Item List */}
-                            <div className="space-y-2 mb-4 bg-gray-950/60 p-3 rounded-xl border border-gray-800/80">
+                            <div className="space-y-1.5 mb-3">
                               {order.items.map((item, idx) => (
-                                <div key={idx} className="flex items-start gap-2.5 text-xs">
-                                  <span className="bg-gray-800 text-brand-400 w-6 h-6 rounded-lg flex items-center justify-center font-black shrink-0 border border-gray-700">
-                                    {item.quantity}
-                                  </span>
-                                  <div className="flex-1 min-w-0">
-                                    <span className="font-bold text-gray-200">
-                                      {item.name}
+                                <div
+                                  key={idx}
+                                  className="flex items-center justify-between py-2 px-3 rounded-xl bg-gray-950/60 border border-gray-800/70"
+                                >
+                                  <div className="flex items-center gap-2.5 min-w-0">
+                                    <span className="w-6 h-6 rounded-lg bg-gray-800 border border-gray-700/80 text-brand-400 text-xs font-black flex items-center justify-center shrink-0">
+                                      {item.quantity}
                                     </span>
-                                    {item.notes && (
-                                      <p className="text-[11px] text-amber-400 font-semibold mt-0.5 bg-amber-950/40 px-2 py-0.5 rounded border border-amber-500/20 inline-block">
-                                        ⚠️ {item.notes}
+                                    <div className="min-w-0">
+                                      <p className="text-xs font-bold text-gray-100 truncate">
+                                        {item.name}
                                       </p>
-                                    )}
+                                      {item.notes && (
+                                        <p className="text-[10px] text-amber-300 font-semibold bg-amber-950/50 border border-amber-500/20 px-1.5 py-0.5 rounded mt-0.5 inline-block">
+                                          ⚠️ {item.notes}
+                                        </p>
+                                      )}
+                                    </div>
                                   </div>
                                 </div>
                               ))}
@@ -367,8 +374,9 @@ function KitchenDashboard() {
 
                             {/* Order Special Notes */}
                             {order.notes && (
-                              <div className="bg-amber-950/30 border border-amber-500/30 rounded-xl p-2.5 mb-3 text-xs text-amber-300">
-                                📌 Note: {order.notes}
+                              <div className="bg-amber-950/30 border border-amber-500/30 rounded-xl px-3 py-2 mb-3 text-xs text-amber-300 flex items-start gap-1.5">
+                                <span className="shrink-0">📌</span>
+                                <span>{order.notes}</span>
                               </div>
                             )}
                           </div>
@@ -377,7 +385,7 @@ function KitchenDashboard() {
                           <div className="pt-2 space-y-2">
                             <button
                               onClick={() => changeStatus(order._id, col.nextStatus)}
-                              className={`w-full py-3 rounded-xl font-black text-xs flex items-center justify-center gap-2 shadow-lg active:scale-98 transition-all ${styling.btn}`}
+                              className={`w-full py-2.5 px-4 rounded-xl font-bold text-xs flex items-center justify-center gap-2 shadow-md active:scale-[0.98] transition-all ${styling.btn}`}
                             >
                               <ArrowRightCircle className="w-4 h-4" />
                               {col.nextLabel}

@@ -463,26 +463,26 @@ function WaiterDashboard() {
                     </div>
 
                     <div className="p-4 flex-1 flex flex-col justify-between">
-                      <div>
-                        <div className="flex items-start justify-between gap-1 mb-1">
+                      <div className="mb-2.5">
+                        <div className="flex items-start justify-between gap-1 mb-1.5">
                           <h3 className="font-bold text-white text-sm">{item.name}</h3>
-                          <span className="text-[10px] text-gray-400 flex items-center gap-0.5 shrink-0">
+                          <span className="text-[10px] text-gray-400 flex items-center gap-0.5 shrink-0 bg-gray-950/60 px-2 py-0.5 rounded-md border border-gray-800">
                             <Clock className="w-3 h-3" />
                             {item.preparationTime}m
                           </span>
                         </div>
-                        <p className="text-xs text-gray-400 line-clamp-2 mb-3">
+                        <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">
                           {item.description}
                         </p>
                       </div>
 
-                      <div className="pt-2 border-t border-gray-800">
+                      <div className="pt-2.5 border-t border-gray-800/80">
                         <div className="flex items-center gap-2">
                           {qty > 0 ? (
-                            <div className="flex items-center gap-1 bg-gray-800 rounded-xl p-1 flex-1">
+                            <div className="flex items-center gap-1 bg-gray-950 border border-gray-800 rounded-xl p-1 flex-1">
                               <button
                                 onClick={() => removeFromCart(item._id)}
-                                className="p-1.5 bg-gray-700 hover:bg-red-500 hover:text-white text-gray-200 rounded-lg transition-colors"
+                                className="w-7 h-7 bg-gray-800 hover:bg-red-500 hover:text-white text-gray-200 rounded-lg flex items-center justify-center transition-colors"
                               >
                                 <Minus className="w-3 h-3" />
                               </button>
@@ -491,7 +491,7 @@ function WaiterDashboard() {
                               </span>
                               <button
                                 onClick={() => addToCart(item)}
-                                className="p-1.5 bg-gray-700 hover:bg-brand-500 hover:text-white text-gray-200 rounded-lg transition-colors"
+                                className="w-7 h-7 bg-gray-800 hover:bg-brand-500 hover:text-white text-gray-200 rounded-lg flex items-center justify-center transition-colors"
                               >
                                 <Plus className="w-3 h-3" />
                               </button>
@@ -502,7 +502,7 @@ function WaiterDashboard() {
                               className="btn-primary flex-1 flex items-center justify-center gap-1.5 py-2 text-xs"
                             >
                               <Plus className="w-3.5 h-3.5" />
-                              Add
+                              Add to Table
                             </button>
                           )}
                           <button
@@ -510,7 +510,7 @@ function WaiterDashboard() {
                             className={`p-2 rounded-xl border transition-colors ${
                               itemNotes[item._id]
                                 ? 'bg-amber-950/40 border-amber-500/40 text-amber-400'
-                                : 'border-gray-800 text-gray-400 hover:text-white'
+                                : 'border-gray-800 text-gray-400 hover:text-white hover:bg-gray-800'
                             }`}
                             title="Add special instructions"
                           >
@@ -526,7 +526,7 @@ function WaiterDashboard() {
                             onChange={(e) =>
                               setItemNotes((prev) => ({ ...prev, [item._id]: e.target.value }))
                             }
-                            className="mt-2 w-full px-2.5 py-1.5 bg-gray-950 border border-gray-800 rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500"
+                            className="mt-2.5 w-full px-2.5 py-1.5 bg-gray-950 border border-gray-800 rounded-lg text-xs text-white focus:outline-none focus:ring-1 focus:ring-brand-500"
                           />
                         )}
                       </div>
@@ -627,16 +627,16 @@ function WaiterDashboard() {
                 return (
                   <div
                     key={order._id}
-                    className={`card p-5 border-2 flex flex-col justify-between transition-all ${
-                      isReady ? 'border-emerald-500 bg-emerald-950/20 shadow-lg' : 'border-gray-800'
+                    className={`card p-4 sm:p-5 border flex flex-col justify-between transition-all shadow-lg ${
+                      isReady ? 'border-emerald-500 bg-emerald-950/20 shadow-emerald-500/10' : 'border-gray-800'
                     }`}
                   >
                     <div>
-                      <div className="flex items-center justify-between mb-3">
+                      <div className="flex items-center justify-between mb-3 pb-3 border-b border-gray-800/80">
                         <div className="flex items-center gap-3">
                           <div
-                            className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm ${
-                              isReady ? 'bg-emerald-500 text-white shadow' : 'bg-gray-800 text-white'
+                            className={`w-10 h-10 rounded-xl flex items-center justify-center font-black text-sm shrink-0 ${
+                              isReady ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/30' : 'bg-gray-800 text-white'
                             }`}
                           >
                             #{order.tableNumber}
@@ -645,8 +645,8 @@ function WaiterDashboard() {
                             <p className="font-bold text-white text-sm">
                               Table #{order.tableNumber}
                             </p>
-                            <p className="text-[10px] text-gray-400">
-                              By {order.waiterName || 'Staff'} ·{' '}
+                            <p className="text-[11px] text-gray-400 mt-0.5">
+                              {order.waiterName || 'Staff'} ·{' '}
                               {new Date(order.createdAt).toLocaleTimeString([], {
                                 hour: '2-digit',
                                 minute: '2-digit',
@@ -655,24 +655,30 @@ function WaiterDashboard() {
                           </div>
                         </div>
                         <span className={st.class}>
-                          <StIcon className="w-3 h-3 mr-1" />
+                          <StIcon className="w-3.5 h-3.5 mr-1" />
                           {st.label}
                         </span>
                       </div>
 
                       {/* Items */}
-                      <div className="space-y-1.5 bg-gray-950/70 border border-gray-800 rounded-xl p-3 mb-3">
+                      <div className="space-y-1.5 mb-3">
                         {order.items.map((item, idx) => (
-                          <div key={idx} className="flex justify-between text-xs text-gray-300">
-                            <span>
-                              <strong className="text-white">{item.quantity}×</strong> {item.name}
+                          <div
+                            key={idx}
+                            className="flex items-center justify-between py-1.5 px-3 rounded-xl bg-gray-950/50 border border-gray-800/60 text-xs text-gray-300"
+                          >
+                            <span className="flex items-center gap-2 min-w-0">
+                              <span className="w-5 h-5 rounded-md bg-gray-800 text-brand-400 font-black text-[11px] flex items-center justify-center shrink-0">
+                                {item.quantity}
+                              </span>
+                              <span className="font-bold text-gray-200 truncate">{item.name}</span>
                               {item.notes && (
-                                <span className="text-[11px] text-amber-400 block pl-3">
-                                  ↳ {item.notes}
+                                <span className="text-[10px] text-amber-300 bg-amber-950/50 px-1.5 py-0.2 rounded border border-amber-500/20 shrink-0">
+                                  {item.notes}
                                 </span>
                               )}
                             </span>
-                            <span className="font-semibold text-gray-400">
+                            <span className="font-bold text-gray-300 shrink-0 pl-2">
                               {formatCurrency(item.price * item.quantity)}
                             </span>
                           </div>
@@ -680,15 +686,16 @@ function WaiterDashboard() {
                       </div>
 
                       {order.notes && (
-                        <p className="text-xs text-amber-300 bg-amber-950/30 border border-amber-500/20 p-2 rounded-lg mb-3">
-                          📌 {order.notes}
+                        <p className="text-xs text-amber-300 bg-amber-950/30 border border-amber-500/20 px-3 py-2 rounded-xl mb-3 flex items-start gap-1.5">
+                          <span>📌</span>
+                          <span>{order.notes}</span>
                         </p>
                       )}
                     </div>
 
-                    <div className="pt-3 border-t border-gray-800">
+                    <div className="pt-3 border-t border-gray-800/80 mt-auto">
                       <div className="flex justify-between items-center mb-3">
-                        <span className="text-xs text-gray-400">Order Total</span>
+                        <span className="text-xs text-gray-400 font-semibold">Order Total</span>
                         <span className="text-base font-black text-white">
                           {formatCurrency(order.totalAmount)}
                         </span>
