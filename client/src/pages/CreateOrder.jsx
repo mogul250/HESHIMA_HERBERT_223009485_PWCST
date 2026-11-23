@@ -321,7 +321,7 @@ export default function CreateOrder() {
                     return (
                       <div
                         key={item._id}
-                        className="p-3 bg-gray-950 rounded-2xl border border-gray-800 flex items-center justify-between gap-3 hover:border-gray-700 transition-colors"
+                        className="p-3.5 bg-gray-950/80 rounded-2xl border border-gray-800 flex items-center justify-between gap-3 hover:border-gray-700 transition-colors shadow-sm"
                       >
                         <div className="flex-1 min-w-0">
                           <h4 className="font-bold text-xs text-white truncate">{item.name}</h4>

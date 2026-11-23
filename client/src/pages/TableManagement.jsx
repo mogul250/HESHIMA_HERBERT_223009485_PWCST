@@ -178,20 +178,20 @@ export default function TableManagement() {
               return (
                 <div
                   key={table._id}
-                  className={`card p-4 border transition-all flex flex-col justify-between ${
+                  className={`card p-5 border transition-all flex flex-col justify-between shadow-md ${
                     isOccupied
                       ? 'border-amber-500/40 bg-amber-950/20'
-                      : 'border-gray-800 hover:border-gray-700 bg-gray-900/60'
+                      : 'border-gray-800 hover:border-gray-700 bg-gray-900/70'
                   }`}
                 >
-                  <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-start justify-between mb-3.5">
                     <span className="text-xl font-black text-white">
                       #{table.number}
                     </span>
                     {isAdmin && (
                       <button
                         onClick={() => handleDelete(table._id, table.number)}
-                        className="text-gray-500 hover:text-red-400 p-1 rounded-lg transition-colors"
+                        className="text-gray-500 hover:text-red-400 p-1.5 rounded-lg transition-colors hover:bg-gray-800"
                         title="Delete table"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
@@ -199,7 +199,7 @@ export default function TableManagement() {
                     )}
                   </div>
 
-                  <div className="space-y-1.5 mb-3">
+                  <div className="space-y-2 mb-4">
                     <div className="flex items-center gap-1.5 text-xs text-gray-400">
                       <Users className="w-3.5 h-3.5 text-gray-500" />
                       <span>{table.seats} Seats</span>
@@ -211,7 +211,7 @@ export default function TableManagement() {
                           isOccupied ? 'bg-amber-400 animate-pulse' : 'bg-emerald-400'
                         }`}
                       />
-                      <span className="text-[11px] font-bold capitalize text-gray-300">
+                      <span className="text-xs font-bold capitalize text-gray-300">
                         {table.status}
                       </span>
                     </div>
@@ -220,7 +220,7 @@ export default function TableManagement() {
                   {isAdmin && (
                     <button
                       onClick={() => handleToggleStatus(table)}
-                      className={`w-full py-1.5 rounded-lg text-[10px] font-bold border transition-colors ${
+                      className={`w-full py-2 rounded-xl text-xs font-bold border transition-colors ${
                         isOccupied
                           ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/10'
                           : 'border-amber-500/30 text-amber-400 hover:bg-amber-500/10'

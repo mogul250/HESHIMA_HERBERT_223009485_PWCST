@@ -13,14 +13,22 @@ dotenv.config();
 
 const app = express();
 const httpServer = createServer(app);
-const io = new Server(httpServer, {
-  cors: {
-    origin: '*',
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+
+// Dynamic CORS configuration accepting any origin (local, Vercel, Render, or custom domains)
+const corsOptions = {
+  origin: (origin, callback) => {
+    callback(null, true);
   },
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+};
+
+const io = new Server(httpServer, {
+  cors: corsOptions,
 });
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Make io accessible to routes

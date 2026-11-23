@@ -278,19 +278,19 @@ export default function MenuManagement() {
                     </div>
                   </div>
 
-                  <div className="p-4">
-                    <div className="flex items-start justify-between gap-1 mb-1">
+                  <div className="p-4 sm:p-5">
+                    <div className="flex items-start justify-between gap-1 mb-1.5">
                       <h3 className="font-bold text-sm text-white">{item.name}</h3>
-                      <span className="text-[10px] text-gray-400 flex items-center gap-0.5 shrink-0">
+                      <span className="text-[10px] text-gray-400 flex items-center gap-0.5 shrink-0 bg-gray-950/60 px-2 py-0.5 rounded-md border border-gray-800">
                         <Clock className="w-3 h-3" />
                         {item.preparationTime}m
                       </span>
                     </div>
-                    <p className="text-xs text-gray-400 line-clamp-2">{item.description}</p>
+                    <p className="text-xs text-gray-400 line-clamp-2 leading-relaxed">{item.description}</p>
                   </div>
                 </div>
 
-                <div className="p-4 pt-2 border-t border-gray-800 flex items-center justify-between gap-2">
+                <div className="p-4 sm:p-5 pt-3.5 border-t border-gray-800/80 flex items-center justify-between gap-2">
                   {isAdmin ? (
                     <button
                       onClick={() => handleToggle(item._id)}
