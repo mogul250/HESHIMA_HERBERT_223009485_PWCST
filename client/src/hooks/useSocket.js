@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
 import { io } from 'socket.io-client';
 
-const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || 'http://localhost:5000';
+// If VITE_SOCKET_URL is provided, use it; otherwise automatically derive from VITE_API_URL (strip /api)
+const API_URL = import.meta.env.VITE_API_URL;
+const DERIVED_SOCKET_URL = API_URL ? API_URL.replace(/\/api\/?$/, '') : null;
+const SOCKET_URL = import.meta.env.VITE_SOCKET_URL || DERIVED_SOCKET_URL || 'http://localhost:5000';
 
 export function useSocket(room, eventHandlers = {}) {
   const socketRef = useRef(null);
@@ -31,4 +34,3 @@ export function useSocket(room, eventHandlers = {}) {
 
   return socketRef;
 }
-
